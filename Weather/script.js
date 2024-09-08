@@ -1,23 +1,25 @@
-const apikey = "7d5e74e7b112e34001dc87b79a2fc7c3";
+const apiKey = "7d5e74e7b112e34001dc87b79a2fc7c3";
 const apiUrl =
   "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
 async function checkWeather(city) {
-  const response = await fetch(apiUrl + city + `&appid=${apikey}`);
-  if (response.status == 404) {
+  const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+  if (response.status === 404) {
     document.querySelector(".error").style.display = "block";
     document.querySelector(".weather").style.display = "none";
   } else {
     let data = await response.json();
+    console.log(response.json());
     document.querySelector(".city").innerHTML = data.name;
     document.querySelector(".temp").innerHTML =
       Math.round(data.main.temp) + "<sup>o</sup>C";
-    document.querySelector(".humidity").innerHTML = data.wind.speed + "Km/hr";
+    document.querySelector(".wind").innerHTML = data.wind.speed + "Km/hr";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
     console.log(data.weather[0].main);
     if (data.weather[0].main == "Clouds") {
-      weatherIcon.src = "img/cloud.png";
+      weatherIcon.src = "img/clouds.png";
     } else if (data.weather[0].main == "Clear") {
       weatherIcon.src = "img/clear.png";
     } else if (data.weather[0].main == "Rain") {
